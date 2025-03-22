@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 import InfoSection from '../components/InfoSection';
 import Hotels from '../components/Hotels';
 import PlacesToVisit from '../components/PlacesToVisit';
+import { db } from '@/service/firebase.config';
 
 const Viewtrip = () => {
     const { tripId } = useParams();
