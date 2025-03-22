@@ -1,4 +1,4 @@
-import { db } from '@/service/firebase.Config';
+import firebaseConfig from "../../service/firebase.config";  // ✅ CORRECT
 import { doc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
