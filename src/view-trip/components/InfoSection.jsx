@@ -101,12 +101,12 @@ const InfoSection = ({ trip = { userSelection: {} } }) => {
         </div>
 
         {/* Share Button */}
-        <Button
-          onClick={shareTrip}
-          className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:scale-105 transition-all p-3 rounded-full shadow-md self-end md:self-auto"
-        >
-          <IoIosSend className="text-white text-xl" />
-        </Button>
+       <Button
+  onClick={shareTrip}
+  className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:scale-105 transition-all p-3 rounded-full shadow-md self-end md:self-auto block md:hidden"
+>
+  <IoIosSend className="text-white text-xl" />
+</Button>
       </div>
     </div>
   );
