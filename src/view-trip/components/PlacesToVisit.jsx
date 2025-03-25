@@ -67,23 +67,25 @@ const PlacesToVisit = ({ trip = {} }) => {
   };
 
   return (
-    <div className="p-6 sm:p-8 bg-gradient-to-b from-[#1a1a1a] to-[#000] min-h-screen rounded-lg shadow-xl">
-      <h2 className="font-extrabold text-3xl sm:text-4xl text-[#E8C547] mb-6 text-center">
+    <div className="bg-gradient-to-b from-[#1a1a1a] to-[#000] min-h-screen p-4 sm:p-6 rounded-lg shadow-2xl">
+      <h3 className="font-extrabold text-3xl sm:text-5xl text-[#E8C547] mb-4 sm:mb-6 text-center">
         🌍 Places to Visit
-      </h2>
+      </h3>
 
-      <div className="space-y-10">
+      <div className="space-y-10 sm:space-y-12">
         {updatedItinerary.length > 0 ? (
           updatedItinerary.map((dayData, dayIndex) => (
             <div
               key={dayIndex}
-              className="relative p-5 sm:p-6 bg-[#121212] rounded-2xl shadow-lg border border-[#E8C547]"
+              className="relative p-4 sm:p-5 bg-[#121212] rounded-2xl shadow-lg border border-gray-700 sm:border-none"
             >
-              <div className="absolute top-[-3px] left-[-15px] bg-[#E8C547] text-black px-4 py-1 rounded-tr-xl rounded-bl-xl text-lg font-bold">
+              {/* Day Badge */}
+              <div className="absolute top-0 left-[-10px] bg-[#E8C547] text-black px-5 py-1 rounded-tr-xl rounded-bl-xl text-lg font-bold shadow-md">
                 🚀 Day {dayData.day}
               </div>
 
-              <h2 className="text-2xl sm:text-3xl font-semibold text-white mt-3 sm:mt-4">
+              {/* Theme & Best Time */}
+              <h2 className="text-2xl sm:text-3xl font-semibold text-white mt-6">
                 {dayData.theme || "No theme available"}
               </h2>
               <p className="text-md text-gray-400 mt-1">
@@ -93,39 +95,40 @@ const PlacesToVisit = ({ trip = {} }) => {
                 </span>
               </p>
 
-              {/* Itinerary Layout: Horizontal for large screens, Cards for small screens */}
-              <div className="mt-6">
-                {Array.isArray(dayData.locations) && dayData.locations.length > 0 ? (
+              {/* Itinerary Layout */}
+              <div className="mt-6 space-y-6">
+                {Array.isArray(dayData.locations) &&
+                dayData.locations.length > 0 ? (
                   dayData.locations.map((place, placeIndex) => {
-                    const imageSrc = getPhotoUrl(place.photoReference); // Assuming you have this function to get the image URL
+                    const imageSrc = getPhotoUrl(place.photoReference);
 
                     return (
                       <div
                         key={placeIndex}
-                        className="flex flex-col sm:flex-row bg-gray-900 rounded-xl shadow-md hover:scale-105 transition-transform duration-300 border border-[#E8C547] mb-6"
+                        className="flex flex-col sm:flex-row bg-gray-900 rounded-2xl shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105"
                       >
-                        <div className="relative w-full sm:w-[180px] h-[180px] sm:h-[200px]">
-                          {/* Map Icon */}
-                          <div
-                            className="absolute top-2 right-2 bg-black text-white p-2 rounded-full opacity-80 hover:opacity-100 cursor-pointer"
-                            >
+                        {/* Image Section */}
+                        <div className="relative w-full sm:w-[250px] h-[250px] sm:h-[250px]">
+                          <div className="absolute top-2 right-2 bg-black text-white p-2 rounded-full opacity-80 hover:opacity-100 cursor-pointer">
                             <FaMapMarkerAlt />
                           </div>
-
-                          {/* Itinerary Photo */}
                           <img
                             src={imageSrc}
-                            onClick={() => openMap(place.placeName, place.placeDetails)}
+                            onClick={() =>
+                              openMap(place.placeName, place.placeDetails)
+                            }
+
                             alt={place.placeName}
-                            cursor="pointer"
-                            className="w-full h-full object-cover rounded-t-lg sm:rounded-l-lg border-b sm:border-b-0 sm:border-r border-[#E8C547]"
+                            className="w-full h-full object-cover cursor-pointer border-b sm:border-r border-[#E8C547] rounded-t-lg sm:rounded-l-2xl"
                           />
                         </div>
-                        <div className="p-4 flex-1">
-                          <h3 className="font-semibold text-lg sm:text-xl text-[#E8C547] group-hover:text-[#FFD700]">
+
+                        {/* Details Section */}
+                        <div className="p-5 sm:p-6 flex-1">
+                          <h3 className="font-semibold text-xl sm:text-2xl text-[#E8C547]">
                             {place.placeName}
                           </h3>
-                          <p className="text-sm sm:text-md text-gray-300 mt-1">
+                          <p className="text-md text-gray-300 mt-2 leading-relaxed">
                             {place.placeDetails}
                           </p>
                         </div>
@@ -133,7 +136,7 @@ const PlacesToVisit = ({ trip = {} }) => {
                     );
                   })
                 ) : (
-                  <p className="text-gray-400 italic mt-2 text-center">
+                  <p className="text-gray-400 italic text-center">
                     No locations listed for this day.
                   </p>
                 )}
@@ -141,7 +144,7 @@ const PlacesToVisit = ({ trip = {} }) => {
             </div>
           ))
         ) : (
-          <p className="text-gray-400 italic text-center">
+          <p className="text-gray-400 italic text-center text-lg">
             No itinerary data available.
           </p>
         )}

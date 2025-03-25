@@ -190,7 +190,7 @@ const CreateTripsPage = () => {
   return (
     <div className="w-full min-h-screen bg-gray-900 text-white px-5 md:px-20 lg:px-32 xl:px-40 py-16">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl font-bold text-[#FFD700] text-center">
+        <h2 className="text-4xl font-bold text-[#FFD700] my-5 text-center">
           Tell us your travel preferences 🏕️🌴
         </h2>
         <p className="mt-3 text-gray-400 text-lg text-center">
@@ -220,7 +220,7 @@ const CreateTripsPage = () => {
 
           {/* Budget Selection */}
           <div>
-            <h2 className="text-xl text-[#FFD700] my-3 font-medium">
+            <h2 className="text-xl text-[#FFD700] my-3 font-medium ">
               What is Your Budget?
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-5 mt-5">

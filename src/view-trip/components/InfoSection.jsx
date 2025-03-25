@@ -5,11 +5,10 @@ import { GetPlaceDetails } from "@/service/GlobalApi";
 
 const API_KEY = import.meta.env.VITE_GMAPS_API_KEY;
 
-/// Function to construct photo URL using photoReference (Corrected)
+// Function to construct photo URL using photoReference
 const getPhotoUrl = (photoReference, maxWidth = 600, maxHeight = 600) => {
   if (!photoReference) return null;
 
-  // Correct URL format for Google Places photo
   return `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photoReference}&maxwidth=${maxWidth}&maxheight=${maxHeight}&key=${API_KEY}`;
 };
 
@@ -32,9 +31,13 @@ const InfoSection = ({ trip = { userSelection: {} } }) => {
       console.log(`Fetching details for: ${locationName}`);
       const result = await GetPlaceDetails(locationName);
 
+      if (!result || !result.places || !result.places[0]) {
+        throw new Error("No places found in the API response.");
+      }
+
       console.log("API Response:", result);
 
-      // Extract `photoReference` safely
+      // Extract photoReference safely
       const photoReference = result?.places?.[0]?.photos?.[0]?.photo_reference || null;
 
       if (photoReference) {
@@ -89,9 +92,7 @@ const InfoSection = ({ trip = { userSelection: {} } }) => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-5 gap-4">
         {/* Station Details */}
         <div className="flex flex-col gap-3">
-          <h2 className="font-bold text-2xl md:text-3xl">
-            {location} 
-          </h2>
+          <h2 className="font-bold text-2xl md:text-3xl">{location}</h2>
           <div className="flex flex-wrap gap-3">
             <h2 className="p-2 px-4 bg-gray-800 text-gray-200 rounded-full text-sm md:text-md">
               🗓️{" "}

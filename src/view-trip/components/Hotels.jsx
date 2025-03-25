@@ -58,7 +58,7 @@ const Hotels = ({ trip = {} }) => {
     }
   };
   return (
-    <div className="mt-6 max-w-6xl mx-auto px-4">
+    <div className="mt-6 max-w-6xl mx-auto px-1">
       <h2 className="text-2xl font-bold text-[#FFD700] mb-4 text-center">
         🏨 Hotel Recommendations
       </h2>
@@ -68,7 +68,7 @@ const Hotels = ({ trip = {} }) => {
           hotels.map((hotel, index) => (
             <div
               key={index}
-              className="relative bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer hover:scale-105 border border-gray-700"
+              className="relative bg-gray-800 p-1 rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer hover:scale-105 border border-gray-700"
               onClick={() =>
                 openHotelOnMap(
                   hotel.hotelName,

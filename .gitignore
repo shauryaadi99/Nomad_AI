@@ -38,3 +38,4 @@ coverage/
 # Git-related  
 .git/  
 .gitignore  
+.vercel

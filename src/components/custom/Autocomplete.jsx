@@ -6,28 +6,35 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 
 const LocationSearch = ({ onSelect }) => {
   const [options, setOptions] = useState([]);
-  const timeoutRef = useRef(null); // Use useRef to store timeout ID
+  const timeoutRef = useRef(null);
 
-  // Fetch suggestions based on input
+  // Fetch suggestions from the API
   const fetchSuggestions = useCallback((query) => {
-    // Only process non-empty queries (leading/trailing spaces are allowed)
-    const trimmedQuery = query.trim();
+    const normalizedQuery = query.trim(); // Normalize query before making request
 
-    // If query is empty after trimming, do not fetch suggestions
-    if (!trimmedQuery) {
-      setOptions([]);
+    if (!normalizedQuery) {
+      setOptions([]); // If empty, clear options
       return;
     }
 
-    // Clear any pending timeouts
+    // Clear any pending requests
     clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(async () => {
-      const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(query)}&limit=5&apiKey=${API_KEY}`;
+      const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(
+        normalizedQuery
+      )}&limit=5&apiKey=${API_KEY}`;
+
       try {
         const response = await fetch(url);
         const data = await response.json();
+
         if (data.features) {
-          setOptions(data.features.map((feature) => feature.properties.formatted));
+          // Ensure all options are trimmed properly
+          const uniqueOptions = Array.from(
+            new Set(data.features.map((feature) => feature.properties.formatted.trim()))
+          );
+
+          setOptions(uniqueOptions); // Update options in state
         }
       } catch (error) {
         console.error("Error fetching location data:", error);
@@ -36,23 +43,26 @@ const LocationSearch = ({ onSelect }) => {
   }, []);
 
   // Handle input changes
-  const handleInputChange = (event, newInputValue) => {
-    fetchSuggestions(newInputValue); // Fetch suggestions when input changes
+  const handleInputChange = (event, newInputValue, reason) => {
+    if (reason === "reset") return; // Prevent unwanted resets
+
+    // Allow fetching for both "Dhanbad" and "Dhanbad " (trailing space case)
+    fetchSuggestions(newInputValue);
   };
 
   // Handle selection from dropdown
   const handleSelectionChange = (event, selectedValue) => {
     if (selectedValue && onSelect) {
-      onSelect(selectedValue); // Send selected location to parent
+      onSelect(selectedValue); // Send selected value without trimming (API already handles normalization)
     }
   };
 
   return (
     <Autocomplete
-      freeSolo={false} // Disable free text input, only allow selection from the dropdown
+      freeSolo={false}
       options={options}
-      onInputChange={handleInputChange} // Fetch suggestions when input changes
-      onChange={handleSelectionChange} // Send selected location to parent
+      onInputChange={handleInputChange}
+      onChange={handleSelectionChange}
       renderInput={(params) => (
         <TextField
           {...params}
