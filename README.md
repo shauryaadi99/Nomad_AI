@@ -76,7 +76,7 @@ npm run dev
 ---
 
 ## 🎯 Live Demo  
-🔗 [Try NomadAI on Vercel](#) *(Replace with actual link)*  
+🔗 [Try NomadAI on Vercel](#)(https://nomadai-livid.vercel.app/) 
 
 ---
 
