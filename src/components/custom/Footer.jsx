@@ -1,5 +1,6 @@
 import React from "react";
-import { Heart, Linkedin, Instagram, Github, TreePalm } from "lucide-react"; // Icons
+import { Heart, Linkedin, Instagram, Github, TreePalm, Home } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -11,7 +12,10 @@ const Footer = () => {
         </p>
 
         {/* Social Media Links */}
-        <div className="flex gap-5">
+        <div className="flex gap-5 items-center">  {/* Ensures proper alignment */}
+          <Link to="/" className="hover:text-blue-400 transition">
+            <Home size={24} />
+          </Link>
           <a href="https://www.linkedin.com/in/shauryaaditya99/" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition">
             <Linkedin size={24} />
           </a>
@@ -21,8 +25,8 @@ const Footer = () => {
           <a href="https://github.com/shauryaadi99/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition">
             <Github size={24} />
           </a>
-          <a href="https://linktr.ee/Shaurya_Aditya_Verma" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 bg-gray-800 px-3 py-2 rounded-lg hover:bg-gray-700 transition">
-            <TreePalm size={18} />
+          <a href="https://linktr.ee/Shaurya_Aditya_Verma" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-400 transition">
+            <TreePalm size={24} />
           </a>
         </div>
       </div>

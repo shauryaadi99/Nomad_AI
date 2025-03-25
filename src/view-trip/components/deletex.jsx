@@ -1,6 +1,6 @@
 import React from "react";
 import deleteAllDocuments from "../../hooks/abc";
-import { app } from "@/service/firebase.config"; // Adjusted path
+import app from "@/service/firebase.config"; // Adjusted path
 
 const DeleteAllComponent = () => {
   const handleDelete = () => {

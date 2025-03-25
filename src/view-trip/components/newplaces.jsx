@@ -14,7 +14,7 @@ const getPhotoUrl = (photoReference, maxWidth = 600, maxHeight = 600) => {
 };
 
 // Default fallback image
-const fallbackImage = "https://img.freepik.com/free-photo/3d-icon-traveling-vacation_23-2151037394.jpg?t=st=1742924976~exp=1742928576~hmac=cb77b1782812df2f91fd49f214ff73952797fd7ed487e85b8e2a0be9cf1b2a5c&w=1380";
+const fallbackImage = "https://www.travelandleisure.com/thmb/Yd9WBLTTukXcuy7Pg3aOHkw6fRI=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/iguazu-falls-argentina-brazil-MOSTBEAUTIFUL0921-e967cc4764ca4eb2b9941bd1b48d64b5.jpg";
 
 const InfoSection = ({ trip = { userSelection: {} } }) => {
   const location = trip?.userSelection?.location || "Unknown Location";
@@ -29,8 +29,8 @@ const InfoSection = ({ trip = { userSelection: {} } }) => {
 
   const fetchPlacePhoto = async (locationName) => {
     try {
-      console.log(`Fetching details for: ${locationName}`);
-      const result = await GetPlaceDetails(locationName);
+      console.log(`Fetching details for: ${locationName + " Railway Station"}`);
+      const result = await GetPlaceDetails(locationName + " Railway Station");
 
       console.log("API Response:", result);
 

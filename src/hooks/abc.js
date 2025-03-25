@@ -1,5 +1,5 @@
 import { getFirestore, collection, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { app } from "@/service/firebase.config"; // Adjusted path
+import app  from "@/service/firebase.config"; // Adjusted path
 
 const db = getFirestore(app); // Initialize Firestore
 

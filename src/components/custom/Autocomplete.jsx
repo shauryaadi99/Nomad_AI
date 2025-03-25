@@ -8,13 +8,19 @@ const LocationSearch = ({ onSelect }) => {
   const [options, setOptions] = useState([]);
   const timeoutRef = useRef(null); // Use useRef to store timeout ID
 
+  // Fetch suggestions based on input
   const fetchSuggestions = useCallback((query) => {
-    if (!query) {
-      setOptions([]); // Clear options when input is empty
+    // Only process non-empty queries (leading/trailing spaces are allowed)
+    const trimmedQuery = query.trim();
+
+    // If query is empty after trimming, do not fetch suggestions
+    if (!trimmedQuery) {
+      setOptions([]);
       return;
     }
 
-    clearTimeout(timeoutRef.current); // Clear previous timeout
+    // Clear any pending timeouts
+    clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(async () => {
       const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(query)}&limit=5&apiKey=${API_KEY}`;
       try {
@@ -29,29 +35,37 @@ const LocationSearch = ({ onSelect }) => {
     }, 300);
   }, []);
 
+  // Handle input changes
+  const handleInputChange = (event, newInputValue) => {
+    fetchSuggestions(newInputValue); // Fetch suggestions when input changes
+  };
+
+  // Handle selection from dropdown
+  const handleSelectionChange = (event, selectedValue) => {
+    if (selectedValue && onSelect) {
+      onSelect(selectedValue); // Send selected location to parent
+    }
+  };
+
   return (
     <Autocomplete
-      freeSolo
+      freeSolo={false} // Disable free text input, only allow selection from the dropdown
       options={options}
-      onInputChange={(event, newInputValue) => fetchSuggestions(newInputValue)}
-      onChange={(event, selectedValue) => {
-        if (selectedValue && onSelect) {
-          onSelect(selectedValue); // Send final selection to parent
-        }
-      }}
+      onInputChange={handleInputChange} // Fetch suggestions when input changes
+      onChange={handleSelectionChange} // Send selected location to parent
       renderInput={(params) => (
-        <TextField 
-          {...params} 
-          label="Search Location..." 
+        <TextField
+          {...params}
+          label="Search Location..."
           variant="outlined"
-          sx={{ 
-            input: { color: "white", fontSize: "18px" }, // Ensures text is visible
-            label: { color: "white" }, // Changes label color
+          sx={{
+            input: { color: "white", fontSize: "18px" },
+            label: { color: "white" },
             "& .MuiOutlinedInput-root": {
-              "& fieldset": { borderColor: "white" }, // Default border
-              "&:hover fieldset": { borderColor: "lightgray" }, // On hover
-              "&.Mui-focused fieldset": { borderColor: "cyan" } // On focus
-            }
+              "& fieldset": { borderColor: "white" },
+              "&:hover fieldset": { borderColor: "lightgray" },
+              "&.Mui-focused fieldset": { borderColor: "cyan" },
+            },
           }}
         />
       )}

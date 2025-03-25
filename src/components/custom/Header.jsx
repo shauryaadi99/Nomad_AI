@@ -1,37 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button"; // Adjust path accordingly
-import GoogleSignIn from "@/view-trip/components/GoogleSignIn.jsx"; // Adjust path accordingly
-import { Link, useNavigate } from "react-router-dom";
-import { TreePalm, UserCircle } from "lucide-react"; // Tree icon & Default DP
+import { Button } from "@/components/ui/button";
+import GoogleSignIn from "@/view-trip/components/GoogleSignIn.jsx";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { TreePalm, UserCircle } from "lucide-react";
 
 const Header = () => {
   const [showSignIn, setShowSignIn] = useState(false);
-  const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation(); // Detects navigation changes
+
+  const getStoredUser = () => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  };
+
+  const [user, setUser] = useState(getStoredUser);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    const syncUserFromStorage = () => {
+      setUser(getStoredUser()); // Update state when localStorage changes
+    };
+
+    window.addEventListener("storage", syncUserFromStorage);
+    return () => window.removeEventListener("storage", syncUserFromStorage);
   }, []);
+
+  useEffect(() => {
+    // Force state update on route change
+    setUser(getStoredUser());
+  }, [location]); // Runs when the route changes
 
   const handleSignOut = () => {
     localStorage.removeItem("user");
     setUser(null);
-    navigate("/"); // Redirect to home page
+    navigate("/");
   };
 
   return (
     <div className="absolute top-0 left-0 w-full p-3 bg-black/30 backdrop-blur-md z-50 flex justify-between items-center px-4 md:px-6">
-      {/* Brand Name */}
       <Link to="/">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-green-400">NomadAI!</h2>
       </Link>
 
-      {/* Right Section */}
       <div className="flex items-center gap-3 sm:gap-5">
-        {/* Linktree Button (Always Visible) */}
         <a
           href="https://linktr.ee/Shaurya_Aditya_Verma"
           target="_blank"
@@ -42,7 +53,6 @@ const Header = () => {
           <span className="hidden sm:inline">Linktree</span>
         </a>
 
-        {/* User Section */}
         {user ? (
           <>
             {user.picture ? (

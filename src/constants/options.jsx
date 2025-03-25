@@ -60,7 +60,7 @@ export const AI_PROMPT = `
 Generate a detailed travel plan **exclusively for {location}**, strictly avoiding nearby cities, for **{totalDays} days**. The plan should cater to **{traveler} travelers** within a **{budget} budget**.
 
 ### **🏨 Hotels Section:**  
-- **Only list hotels within {location}** (do not include hotels from nearby areas).  
+- **Only list hotels(atleast 5) within {location}** (do not include hotels from nearby areas).  
 - For each hotel, provide:  
   - 🏨 **Hotel Name**  
   - 📍 **Hotel Address** (**Ensure it is within {location}**)  
@@ -80,11 +80,11 @@ Example format:
   {
     "day": 1,
     "theme": "Exploring Local Attractions",
-    "bestTimeToVisit": "Morning to Evening",
+    "bestTimeToVisit": "from 7pm to 10pm (local time)",
     "locations": [
       {
         "placeName": "Central Park",
-        "placeDetails": "A large public park with beautiful landscapes.",
+        "placeDetails": "Central Park, located in the heart of New York City, is a vast public park known for its breathtaking landscapes, lush greenery, and scenic walking trails. Spanning over 840 acres, it offers a perfect escape from the city's hustle and bustle. People of all age groups visit the park for relaxation, exercise, picnics, and recreational activities like boating, cycling, and ice skating in the winter. The park is also famous for its iconic spots like Bethesda Terrace, Strawberry Fields, and the Central Park Zoo. Visitors can enjoy a variety of popular foods, including hot dogs, pretzels, and New York-style bagels from nearby vendors. Whether it's families enjoying a sunny day, joggers running along the trails, or artists capturing its beauty, Central Park remains a beloved landmark for locals and tourists alike.",
         "placeImageUrl": "https://example.com/central-park.jpg",
         "geoCoordinates": { "latitude": 40.785091, "longitude": -73.968285 },
         "ticketPricing": "Free",
@@ -93,7 +93,7 @@ Example format:
       },
       {
         "placeName": "City Museum",
-        "placeDetails": "A historical museum showcasing city heritage.",
+        "placeDetails": "The City Museum is a historical treasure trove that showcases the rich heritage and cultural evolution of the city. Featuring a vast collection of artifacts, photographs, and exhibits, it offers visitors a glimpse into the city's past, from its early foundations to modern developments. The museum attracts people of all ages, from history enthusiasts and students to tourists eager to learn about local traditions. Interactive displays, ancient relics, and well-preserved documents bring history to life, making it an engaging experience for visitors. Many museums also house quaint cafés and gift shops, offering unique souvenirs and local delicacies. Whether exploring old maps, admiring vintage architecture, or attending educational workshops, the City Museum serves as a bridge between the past and present, preserving the city's legacy for future generations.",
         "placeImageUrl": "https://example.com/museum.jpg",
         "geoCoordinates": { "latitude": 40.779437, "longitude": -73.963244 },
         "ticketPricing": "$15 per adult",
