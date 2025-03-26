@@ -109,7 +109,11 @@ const PlacesToVisit = ({ trip = {} }) => {
                       >
                         {/* Image Section */}
                         <div className="relative w-full sm:w-[250px] h-[250px] sm:h-[250px]">
-                          <div className="absolute top-2 right-2 bg-black text-white p-2 rounded-full opacity-80 hover:opacity-100 cursor-pointer">
+                          <div className="absolute top-2 right-2 bg-black text-white p-2 rounded-full opacity-80 hover:opacity-100 cursor-pointer"
+                            onClick={() =>
+                            openMap(place.placeName, place.placeDetails)
+                          }
+                            >
                             <FaMapMarkerAlt />
                           </div>
                           <img
