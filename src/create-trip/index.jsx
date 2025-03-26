@@ -89,7 +89,7 @@ const CreateTripsPage = () => {
     // Check if the user is signed in
     if (!user || !user.email) {
       toast.custom(() => (
-<div className="text-[#FFD700] font-semibold z-[9999]"
+<div className="text-[#FFD700] font-semibold z-[9999] bg-black"
           style={{ zIndex: 9999 }}
         >          ⚠️ Please sign in first!
         </div>
@@ -106,7 +106,7 @@ const CreateTripsPage = () => {
     ) {
       toast.custom(() => (
 <div
-          className="text-[#FFD700] font-semibold z-[9999]"
+          className="text-[#FFD700] font-semibold z-[9999] bg-black"
           style={{ zIndex: 9999 }}
         >          ⚠️ All fields must be filled!
         </div>
@@ -118,7 +118,7 @@ const CreateTripsPage = () => {
     if (parseInt(formData.noOfDays, 10) > 5) {
       toast.custom(() => (
 <div
-          className="text-[#FFD700] font-semibold z-[9999]"
+          className="text-[#FFD700] font-semibold z-[9999] bg-black"
           style={{ zIndex: 9999 }}
         >          ⚠️ You can only plan trips for up to 5 days!
         </div>
