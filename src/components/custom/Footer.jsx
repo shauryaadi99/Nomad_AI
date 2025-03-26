@@ -7,12 +7,12 @@ const Footer = () => {
     <footer className="w-full bg-black/80 text-white py-5 px-6 md:px-10 text-center">
       <div className="flex flex-col items-center gap-3">
         {/* Made with love message */}
-        <p className="text-gray-400 flex items-center gap-1">
+        <p className="text-gray-400 flex items-center gap-1 text-sm md:text-base">
           Made with <Heart size={18} className="text-red-500" /> Support for more brewed-up apps ☕
         </p>
 
         {/* Social Media Links */}
-        <div className="flex gap-5 items-center">  {/* Ensures proper alignment */}
+        <div className="flex flex-wrap justify-center gap-5 items-center mt-2">
           <Link to="/" className="hover:text-blue-400 transition">
             <Home size={24} />
           </Link>
