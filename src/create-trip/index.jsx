@@ -89,9 +89,10 @@ const CreateTripsPage = () => {
     // Check if the user is signed in
     if (!user || !user.email) {
       toast.custom(() => (
-<div className="text-[#FFD700] font-semibold z-[9999] bg-black"
-          style={{ zIndex: 9999 }}
-        >          ⚠️ Please sign in first!
+ <div
+    className="flex items-center justify-center w-full max-w-xs p-3 bg-black text-[#FFD700] font-semibold rounded-md shadow-lg"
+    style={{ zIndex: 9999 }}
+  >         ⚠️ Please sign in first!
         </div>
       ));
       return;
@@ -105,10 +106,10 @@ const CreateTripsPage = () => {
       !formData.Travelers
     ) {
       toast.custom(() => (
-<div
-          className="text-[#FFD700] font-semibold z-[9999] bg-black"
-          style={{ zIndex: 9999 }}
-        >          ⚠️ All fields must be filled!
+ <div
+    className="flex items-center justify-center w-full max-w-xs p-3 bg-black text-[#FFD700] font-semibold rounded-md shadow-lg"
+    style={{ zIndex: 9999 }}
+  >          ⚠️ All fields must be filled!
         </div>
       ));
       return;
@@ -117,10 +118,10 @@ const CreateTripsPage = () => {
     // Validation: Check if the number of days exceeds 5
     if (parseInt(formData.noOfDays, 10) > 5) {
       toast.custom(() => (
-<div
-          className="text-[#FFD700] font-semibold z-[9999] bg-black"
-          style={{ zIndex: 9999 }}
-        >          ⚠️ You can only plan trips for up to 5 days!
+ <div
+    className="flex items-center justify-center w-full max-w-xs p-3 bg-black text-[#FFD700] font-semibold rounded-md shadow-lg"
+    style={{ zIndex: 9999 }}
+  >          ⚠️ You can only plan trips for up to 5 days!
         </div>
       ));
       return;
