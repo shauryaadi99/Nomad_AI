@@ -21,6 +21,25 @@ const PlacesToVisit = ({ trip = {} }) => {
       : fallbackImage;
   };
 
+  
+
+
+    // const fetchHotelPhoto = async (hotelName) => {
+    //   try {
+    //     const result = await GetPlaceDetails(hotelName);
+    //     const photoReference = result?.places?.[0]?.photos?.[0]?.name || null;
+  
+    //     if (photoReference) {
+    //       return getPhotoUrl(photoReference);
+    //     } else {
+    //       return fallbackImage;
+    //     }
+    //   } catch (error) {
+    //     console.error(`Error fetching image for ${hotelName}:`, error);
+    //     return fallbackImage;
+    //   }
+    // };
+
   useEffect(() => {
     const fetchPhotoReferences = async () => {
       try {
@@ -56,7 +75,8 @@ const PlacesToVisit = ({ trip = {} }) => {
       }
     };
 
-    if (itineraryArray.length > 0) fetchPhotoReferences();
+    if (itineraryArray.length > 0) 
+      fetchPhotoReferences();
   }, [trip]);
 
   const openMap = (placeName, placeAddress) => {

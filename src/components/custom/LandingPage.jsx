@@ -3,7 +3,6 @@ import { FaPlay } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Header from "./Header";
-import Footer from "./Footer";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -55,11 +54,13 @@ const LandingPage = () => {
 
         {/* Hero Section */}
         <div className="relative w-full h-screen">
+          {/* Background Image */}
           <img
-            src="https://images.pexels.com/photos/2916820/pexels-photo-2916820.jpeg"
+            src="/NomadAI_Herosection.jpeg"
             alt="Scenic India"
             className="w-full h-full object-cover"
           />
+
           <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-center text-white px-5">
             <h1 className="text-4xl font-bold">We welcome you to</h1>
             <h2 className="text-5xl font-extrabold text-green-400 mt-2">

@@ -5,15 +5,16 @@ import { GetPlaceDetails } from "@/service/GlobalApi";
 
 const API_KEY = import.meta.env.VITE_GMAPS_API_KEY;
 
-// Function to construct photo URL using photoReference
+// Fallback image
+const fallbackImage =
+  "https://img.freepik.com/free-photo/3d-icon-traveling-vacation_23-2151037394.jpg?t=st=1742924976~exp=1742928576~hmac=cb77b1782812df2f91fd49f214ff73952797fd7ed487e85b8e2a0be9cf1b2a5c&w=1380";
+
+// Function to construct photo URL using Places (New) API format
 const getPhotoUrl = (photoReference, maxWidth = 600, maxHeight = 600) => {
-  if (!photoReference) return null;
-
-  return `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photoReference}&maxwidth=${maxWidth}&maxheight=${maxHeight}&key=${API_KEY}`;
+  return photoReference
+    ? `https://places.googleapis.com/v1/${photoReference}/media?maxWidthPx=${maxWidth}&maxHeightPx=${maxHeight}&key=${API_KEY}`
+    : fallbackImage;
 };
-
-// Default fallback image
-const fallbackImage = "https://img.freepik.com/free-photo/3d-icon-traveling-vacation_23-2151037394.jpg?t=st=1742924976~exp=1742928576~hmac=cb77b1782812df2f91fd49f214ff73952797fd7ed487e85b8e2a0be9cf1b2a5c&w=1380";
 
 const InfoSection = ({ trip = { userSelection: {} } }) => {
   const location = trip?.userSelection?.location || "Unknown Location";
@@ -26,6 +27,7 @@ const InfoSection = ({ trip = { userSelection: {} } }) => {
     }
   }, [location]);
 
+  // Function to fetch and set place photo
   const fetchPlacePhoto = async (locationName) => {
     try {
       console.log(`Fetching details for: ${locationName}`);
@@ -37,8 +39,7 @@ const InfoSection = ({ trip = { userSelection: {} } }) => {
 
       console.log("API Response:", result);
 
-      // Extract photoReference safely
-      const photoReference = result?.places?.[0]?.photos?.[0]?.photo_reference || null;
+      const photoReference = result?.places?.[0]?.photos?.[0]?.name || null;
 
       if (photoReference) {
         const photoURL = getPhotoUrl(photoReference);
