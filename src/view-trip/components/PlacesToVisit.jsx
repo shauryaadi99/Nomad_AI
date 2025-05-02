@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { GetPlaceDetails } from "@/service/GlobalApi";
-import { FaMapMarkerAlt } from "react-icons/fa"; // For the map icon
+// import { FaMapMarkerAlt } from "react-icons/fa"; // For the map icon
+import { FaMapMarkerAlt, FaArrowCircleUp } from "react-icons/fa"; // Add scroll-up icon
+import { FiArrowUpCircle } from "react-icons/fi"; // Better scroll-to-top icon
+import { HiArrowUp } from "react-icons/hi"; // Heroicons' Arrow Up icon
 
 // Fallback image for missing images
 const fallbackImage =
@@ -21,24 +24,21 @@ const PlacesToVisit = ({ trip = {} }) => {
       : fallbackImage;
   };
 
-  
+  // const fetchHotelPhoto = async (hotelName) => {
+  //   try {
+  //     const result = await GetPlaceDetails(hotelName);
+  //     const photoReference = result?.places?.[0]?.photos?.[0]?.name || null;
 
-
-    // const fetchHotelPhoto = async (hotelName) => {
-    //   try {
-    //     const result = await GetPlaceDetails(hotelName);
-    //     const photoReference = result?.places?.[0]?.photos?.[0]?.name || null;
-  
-    //     if (photoReference) {
-    //       return getPhotoUrl(photoReference);
-    //     } else {
-    //       return fallbackImage;
-    //     }
-    //   } catch (error) {
-    //     console.error(`Error fetching image for ${hotelName}:`, error);
-    //     return fallbackImage;
-    //   }
-    // };
+  //     if (photoReference) {
+  //       return getPhotoUrl(photoReference);
+  //     } else {
+  //       return fallbackImage;
+  //     }
+  //   } catch (error) {
+  //     console.error(`Error fetching image for ${hotelName}:`, error);
+  //     return fallbackImage;
+  //   }
+  // };
 
   useEffect(() => {
     const fetchPhotoReferences = async () => {
@@ -75,9 +75,23 @@ const PlacesToVisit = ({ trip = {} }) => {
       }
     };
 
-    if (itineraryArray.length > 0) 
-      fetchPhotoReferences();
+    if (itineraryArray.length > 0) fetchPhotoReferences();
   }, [trip]);
+
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const openMap = (placeName, placeAddress) => {
     const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -129,11 +143,12 @@ const PlacesToVisit = ({ trip = {} }) => {
                       >
                         {/* Image Section */}
                         <div className="relative w-full sm:w-[250px] h-[250px] sm:h-[250px]">
-                          <div className="absolute top-2 right-2 bg-black text-white p-2 rounded-full opacity-80 hover:opacity-100 cursor-pointer"
+                          <div
+                            className="absolute top-2 right-2 bg-black text-white p-2 rounded-full opacity-80 hover:opacity-100 cursor-pointer"
                             onClick={() =>
-                            openMap(place.placeName, place.placeDetails)
-                          }
-                            >
+                              openMap(place.placeName, place.placeDetails)
+                            }
+                          >
                             <FaMapMarkerAlt />
                           </div>
                           <img
@@ -141,7 +156,6 @@ const PlacesToVisit = ({ trip = {} }) => {
                             onClick={() =>
                               openMap(place.placeName, place.placeDetails)
                             }
-
                             alt={place.placeName}
                             className="w-full h-full object-cover cursor-pointer border-b sm:border-r border-[#E8C547] rounded-t-lg sm:rounded-l-2xl"
                           />
@@ -173,6 +187,15 @@ const PlacesToVisit = ({ trip = {} }) => {
           </p>
         )}
       </div>
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 bg-[#E8C547] text-black p-3 rounded-full shadow-lg hover:bg-yellow-400 transition-transform transform hover:scale-110 z-50"
+          aria-label="Scroll to top"
+        >
+          <HiArrowUp size={20} />
+        </button>
+      )}
     </div>
   );
 };
