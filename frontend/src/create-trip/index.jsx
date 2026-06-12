@@ -154,11 +154,43 @@ const CreateTripsPage = () => {
       if (match && match[1]) {
         cleanedText = match[1].trim();
       } else {
-        // Fallback: just take from first { to last }
+        // Fallback: robustly extract the outermost JSON object
         const startIdx = cleanedText.indexOf('{');
-        const endIdx = cleanedText.lastIndexOf('}');
-        if (startIdx !== -1 && endIdx !== -1) {
-          cleanedText = cleanedText.substring(startIdx, endIdx + 1);
+        if (startIdx !== -1) {
+          let openBraces = 0;
+          let endIdx = -1;
+          let inString = false;
+          let escape = false;
+
+          for (let i = startIdx; i < cleanedText.length; i++) {
+            const char = cleanedText[i];
+            if (escape) {
+              escape = false;
+              continue;
+            }
+            if (char === '\\') {
+              escape = true;
+              continue;
+            }
+            if (char === '"') {
+              inString = !inString;
+              continue;
+            }
+            if (!inString) {
+              if (char === '{') openBraces++;
+              else if (char === '}') {
+                openBraces--;
+                if (openBraces === 0) {
+                  endIdx = i;
+                  break; // Found the outermost matching closing brace
+                }
+              }
+            }
+          }
+
+          if (endIdx !== -1) {
+            cleanedText = cleanedText.substring(startIdx, endIdx + 1);
+          }
         }
       }
       
