@@ -12,7 +12,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors()); // Allow all origins for now, configure later for production
+app.use(cors({
+  origin: ["http://localhost:5173", "https://nomadai-livid.vercel.app"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true
+})); // Allow specific origins for CORS
 app.use(express.json()); // Parse JSON bodies
 
 // Routes

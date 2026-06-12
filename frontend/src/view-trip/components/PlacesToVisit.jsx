@@ -15,9 +15,11 @@ const PlacesToVisit = ({ trip = {} }) => {
     : [];
 
   // Function to generate photo URL using backend proxy
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://nomad-ai-backend.vercel.app";
+
   const getPhotoUrl = (photoReference, maxWidth = 600, maxHeight = 600) => {
     return photoReference
-      ? `/api/place-photo?name=${photoReference}&maxWidthPx=${maxWidth}&maxHeightPx=${maxHeight}`
+      ? `${API_BASE_URL}/api/place-photo?name=${photoReference}&maxWidthPx=${maxWidth}&maxHeightPx=${maxHeight}`
       : fallbackImage;
   };
 

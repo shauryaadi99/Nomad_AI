@@ -1,7 +1,9 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://nomad-ai-backend.vercel.app";
+
 export const chatSession = {
   sendMessage: async (prompt) => {
     try {
-      const response = await fetch("/api/generate-trip", {
+      const response = await fetch(`${API_BASE_URL}/api/generate-trip`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

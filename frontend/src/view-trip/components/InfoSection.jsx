@@ -9,9 +9,11 @@ const fallbackImage =
   "https://img.freepik.com/free-photo/3d-icon-traveling-vacation_23-2151037394.jpg?t=st=1742924976~exp=1742928576~hmac=cb77b1782812df2f91fd49f214ff73952797fd7ed487e85b8e2a0be9cf1b2a5c&w=1380";
 
 // Function to construct photo URL using the backend proxy
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://nomad-ai-backend.vercel.app";
+
 const getPhotoUrl = (photoReference, maxWidth = 600, maxHeight = 600) => {
   return photoReference
-    ? `/api/place-photo?name=${photoReference}&maxWidthPx=${maxWidth}&maxHeightPx=${maxHeight}`
+    ? `${API_BASE_URL}/api/place-photo?name=${photoReference}&maxWidthPx=${maxWidth}&maxHeightPx=${maxHeight}`
     : fallbackImage;
 };
 

@@ -6,11 +6,12 @@ import { GetPlaceDetails } from "@/service/GlobalApi";
 const API_KEY = import.meta.env.VITE_GMAPS_API_KEY;
 
 /// Function to construct photo URL using photoReference (Corrected)
-const getPhotoUrl = (photoReference, maxWidth = 600, maxHeight = 600) => {
-  if (!photoReference) return null;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://nomad-ai-backend.vercel.app";
 
-  // Correct URL format for Google Places photo
-  return `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photoReference}&maxwidth=${maxWidth}&maxheight=${maxHeight}&key=${API_KEY}`;
+const getPhotoUrl = (photoReference, maxWidth = 600, maxHeight = 600) => {
+  return photoReference
+    ? `${API_BASE_URL}/api/place-photo?name=${photoReference}&maxWidthPx=${maxWidth}&maxHeightPx=${maxHeight}`
+    : fallbackImage;
 };
 
 // Default fallback image

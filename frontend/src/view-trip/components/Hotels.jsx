@@ -4,9 +4,11 @@ import { FaMapMarkerAlt, FaStar, FaWallet } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 // Function to construct photo URL using backend proxy
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://nomad-ai-backend.vercel.app";
+
 const getPhotoUrl = (photoReference, maxWidth = 600, maxHeight = 600) => {
   if (!photoReference) return null;
-  return `/api/place-photo?name=${photoReference}&maxWidthPx=${maxWidth}&maxHeightPx=${maxHeight}`;
+  return `${API_BASE_URL}/api/place-photo?name=${photoReference}&maxWidthPx=${maxWidth}&maxHeightPx=${maxHeight}`;
 };
 
 // Default fallback image
